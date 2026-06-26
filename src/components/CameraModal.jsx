@@ -4,6 +4,8 @@ export default function CameraModal({
   isOpen,
   videoRef,
   error,
+  nickname,
+  onNicknameChange,
   onTakePhoto,
   onClose,
   onRetry,
@@ -59,6 +61,21 @@ export default function CameraModal({
             </div>
           </div>
         )}
+
+        <div className="w-full mb-5">
+          <label htmlFor="farmer-nickname" className="block text-sm font-black text-emerald-900 mb-2">
+            Farmer Nickname
+          </label>
+          <input
+            id="farmer-nickname"
+            type="text"
+            value={nickname}
+            onChange={event => onNicknameChange(event.target.value)}
+            placeholder="Enter a nickname"
+            maxLength={24}
+            className="w-full rounded-2xl border-2 border-emerald-100 bg-emerald-50 px-4 py-3 text-emerald-950 font-semibold outline-none transition-colors focus:border-emerald-400 focus:bg-white"
+          />
+        </div>
 
         <button
           onClick={onTakePhoto}

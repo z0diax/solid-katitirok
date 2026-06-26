@@ -33,7 +33,7 @@ export const distance = (x1, y1, x2, y2) => {
 /**
  * Create a new farmer object from photo
  */
-export const createFarmerFromPhoto = (imgUrl, fieldRef, nextIdRef, getRandomTargetFn, costumes) => {
+export const createFarmerFromPhoto = (imgUrl, nickname, fieldRef, nextIdRef, getRandomTargetFn, costumes) => {
   let initialX = 100;
   let initialY = 100;
 
@@ -47,6 +47,7 @@ export const createFarmerFromPhoto = (imgUrl, fieldRef, nextIdRef, getRandomTarg
     id: `farmer_${nextIdRef.current++}`,
     type: 'farmer',
     imgUrl,
+    nickname: nickname?.trim() || '',
     x: initialX,
     y: initialY,
     ...getRandomTargetFn(),

@@ -35,6 +35,7 @@ const getInitialUpdatedAt = () => {
 export default function App() {
   const [farmers, setFarmers] = useState(getInitialFarmers);
   const [chicks, setChicks] = useState(getInitialChicks);
+  const [nickname, setNickname] = useState('');
 
   const fieldRef = useRef(null);
   const nextId = useRef(getInitialNextId());
@@ -47,6 +48,16 @@ export default function App() {
   const lastRemoteUpdateRef = useRef(0);
 
   const { isCameraOpen, stream, error, videoRef, openCamera, closeCamera } = useCamera();
+
+  const handleOpenCamera = useCallback(() => {
+    setNickname('');
+    openCamera();
+  }, [openCamera]);
+
+  const handleCloseCamera = useCallback(() => {
+    setNickname('');
+    closeCamera();
+  }, [closeCamera]);
 
   const getRandomTargetCallback = useCallback(() => {
     return getRandomTarget(fieldRef);
@@ -157,6 +168,7 @@ export default function App() {
 
     const newFarmer = createFarmerFromPhoto(
       imgUrl,
+      nickname,
       fieldRef,
       nextId,
       getRandomTargetCallback,
@@ -191,7 +203,7 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-b from-sky-300 to-sky-100 flex flex-col items-center justify-center p-4 sm:p-8 font-sans overflow-hidden">
       <SkyDecorations />
 
-      <Header onAddFarmer={openCamera} />
+      <Header onAddFarmer={handleOpenCamera} />
 
       <GameField fieldRef={fieldRef} farmers={farmers} chicks={chicks} />
 
@@ -199,9 +211,11 @@ export default function App() {
         isOpen={isCameraOpen}
         videoRef={videoRef}
         error={error}
+        nickname={nickname}
+        onNicknameChange={setNickname}
         onTakePhoto={handleTakePhoto}
-        onClose={closeCamera}
-        onRetry={openCamera}
+        onClose={handleCloseCamera}
+        onRetry={handleOpenCamera}
       />
     </div>
   );

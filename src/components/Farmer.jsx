@@ -63,6 +63,12 @@ export default function Farmer({ farmer }) {
           <div className="absolute bottom-2 right-1 w-4 h-2.5 bg-pink-400/70 rounded-full blur-[1px]" />
         </div>
 
+        {farmer.nickname ? (
+          <div className="mb-1 max-w-[96px] rounded-full bg-white/85 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-emerald-800 shadow-sm text-center">
+            {farmer.nickname}
+          </div>
+        ) : null}
+
         {/* The Chibi Body */}
         <div className="relative w-14 h-12 -mt-4 z-10 flex flex-col items-center">
           <div className="w-12 h-10 rounded-t-2xl rounded-b-lg absolute top-0" style={{ backgroundColor: farmer.costume.shirt }}></div>
@@ -75,7 +81,6 @@ export default function Farmer({ farmer }) {
 
           <div className="absolute top-3 left-2 w-2.5 h-2.5 bg-yellow-400 rounded-full border border-yellow-600 shadow-sm" />
           <div className="absolute top-3 right-2 w-2.5 h-2.5 bg-yellow-400 rounded-full border border-yellow-600 shadow-sm" />
-
           <div
             className="absolute top-4 -left-1 w-3 h-6 rounded-full origin-top border border-black/10"
             style={{ backgroundColor: farmer.costume.shirt, transform: `rotate(${isWalking ? Math.sin(t * 2) * 30 : 10}deg)` }}

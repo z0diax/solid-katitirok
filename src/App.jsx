@@ -3,6 +3,7 @@ import Header from './components/Header.jsx';
 import GameField from './components/GameField.jsx';
 import CameraModal from './components/CameraModal.jsx';
 import SkyDecorations from './components/SkyDecorations.jsx';
+import ParticipantsPanel from './components/ParticipantsPanel.jsx';
 import { useCamera } from './hooks/useCamera.js';
 import { useGameLoop } from './hooks/useGameLoop.js';
 import { COSTUMES } from './constants/costumes.js';
@@ -205,7 +206,13 @@ export default function App() {
 
       <Header onAddFarmer={handleOpenCamera} />
 
-      <GameField fieldRef={fieldRef} farmers={farmers} chicks={chicks} />
+      <div className="w-full max-w-7xl flex flex-col xl:flex-row items-start gap-6">
+        <div className="flex-1 w-full">
+          <GameField fieldRef={fieldRef} farmers={farmers} chicks={chicks} />
+        </div>
+
+        <ParticipantsPanel farmers={farmers} />
+      </div>
 
       <CameraModal
         isOpen={isCameraOpen}

@@ -64,7 +64,10 @@ export default function Farmer({ farmer }) {
         </div>
 
         {farmer.nickname ? (
-          <div className="mb-1 max-w-[96px] rounded-full bg-white/85 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-emerald-800 shadow-sm text-center">
+          <div
+            className="mb-1 max-w-[96px] rounded-full bg-white/85 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-emerald-800 shadow-sm text-center"
+            style={{ transform: `scaleX(${isGoingLeft ? -1 : 1})` }}
+          >
             {farmer.nickname}
           </div>
         ) : null}

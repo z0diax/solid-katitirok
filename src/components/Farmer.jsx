@@ -1,4 +1,5 @@
 export default function Farmer({ farmer }) {
+  const farmerScale = 0.78;
   const isWalking = farmer.state === 'walking';
   const t = farmer.animationTime;
   const bounce = isWalking ? Math.abs(Math.sin(t * 2)) * -12 : Math.sin(t) * -2;
@@ -33,7 +34,7 @@ export default function Farmer({ farmer }) {
       <div
         className="absolute bottom-0 left-0 flex flex-col items-center"
         style={{
-          transform: `translate(-50%, 0) translateY(${bounce}px) rotate(${waddleAngle}deg) scaleX(${scaleX})`,
+          transform: `translate(-50%, 0) translateY(${bounce}px) rotate(${waddleAngle}deg) scale(${farmerScale}) scaleX(${scaleX})`,
           transition: 'transform 0.05s linear'
         }}
       >
@@ -52,7 +53,7 @@ export default function Farmer({ farmer }) {
         </div>
 
         {/* The Head / Face */}
-        <div className="relative w-[72px] h-[72px] rounded-full border-4 border-white bg-amber-50 shadow-md z-20 flex items-center justify-center overflow-hidden mb-1">
+          <div className="relative w-[72px] h-[72px] rounded-full border-4 border-white bg-amber-50 shadow-md z-20 flex items-center justify-center overflow-hidden mb-1">
           <img
             src={farmer.imgUrl}
             alt="Farmer Face"

@@ -60,6 +60,31 @@ export default function App() {
     closeCamera();
   }, [closeCamera]);
 
+  const handleRemoveFarmer = useCallback((farmerId) => {
+    setFarmers(prev => {
+      const updatedFarmers = prev.filter(farmer => farmer.id !== farmerId);
+      const updatedState = {
+        farmers: updatedFarmers,
+        chicks,
+        nextId: nextId.current,
+        updatedAt: Date.now()
+      };
+
+      latestStateRef.current = updatedState;
+      saveFarmState(updatedState);
+
+      if (isSupabaseConfigured()) {
+        saveRemoteFarmState({
+          farmers: updatedFarmers,
+          nextId: nextId.current,
+          updatedAt: updatedState.updatedAt
+        });
+      }
+
+      return updatedFarmers;
+    });
+  }, [chicks]);
+
   const getRandomTargetCallback = useCallback(() => {
     return getRandomTarget(fieldRef);
   }, []);
@@ -211,7 +236,7 @@ export default function App() {
           <GameField fieldRef={fieldRef} farmers={farmers} chicks={chicks} />
         </div>
 
-        <ParticipantsPanel farmers={farmers} />
+        <ParticipantsPanel farmers={farmers} onRemoveFarmer={handleRemoveFarmer} />
       </div>
 
       <CameraModal

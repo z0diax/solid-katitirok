@@ -1,0 +1,7 @@
+# Don't ignore dist folder - it's our build output!
+node_modules
+.env.local
+.env.*.local
+.git
+.gitignore
+README.md

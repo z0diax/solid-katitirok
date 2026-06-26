@@ -21,11 +21,6 @@ export const useCamera = () => {
       
       const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
       
-      // Set video element stream immediately
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
-      
       setStream(mediaStream);
       setIsCameraOpen(true);
     } catch (err) {
@@ -40,6 +35,9 @@ export const useCamera = () => {
   };
 
   const closeCamera = () => {
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
     if (stream) {
       stopMediaStream(stream);
     }
@@ -50,12 +48,19 @@ export const useCamera = () => {
 
   // Cleanup on unmount
   useEffect(() => {
+    if (stream && isCameraOpen && videoRef.current) {
+      videoRef.current.srcObject = stream;
+      videoRef.current.play().catch(err => {
+        console.warn('Video playback error:', err);
+      });
+    }
+
     return () => {
       if (stream) {
         stopMediaStream(stream);
       }
     };
-  }, [stream]);
+  }, [stream, isCameraOpen]);
 
   return {
     isCameraOpen,

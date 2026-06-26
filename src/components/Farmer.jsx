@@ -1,5 +1,5 @@
 export default function Farmer({ farmer }) {
-  const farmerScale = 0.78;
+  const farmerScale = 0.62;
   const isWalking = farmer.state === 'walking';
   const t = farmer.animationTime;
   const bounce = isWalking ? Math.abs(Math.sin(t * 2)) * -12 : Math.sin(t) * -2;
@@ -66,8 +66,8 @@ export default function Farmer({ farmer }) {
 
         {farmer.nickname ? (
           <div
-            className="mb-1 max-w-[96px] rounded-full bg-white/85 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-emerald-800 shadow-sm text-center"
-            style={{ transform: `scaleX(${isGoingLeft ? -1 : 1})` }}
+            className="absolute -top-7 left-1/2 mb-0 max-w-[84px] -translate-x-1/2 rounded-full bg-white/85 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-emerald-800 shadow-sm text-center"
+            style={{ transform: `translateX(-50%) scaleX(${isGoingLeft ? -1 : 1})` }}
           >
             {farmer.nickname}
           </div>

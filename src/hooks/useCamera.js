@@ -10,19 +10,32 @@ export const useCamera = () => {
   const openCamera = async () => {
     setError(null);
     try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'user' }
-      });
+      const constraints = {
+        video: {
+          facingMode: 'user',
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false
+      };
+      
+      const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+      
+      // Set video element stream immediately
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+      }
+      
       setStream(mediaStream);
       setIsCameraOpen(true);
-      setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = mediaStream;
-        }
-      }, 100);
     } catch (err) {
-      console.error("Error accessing camera:", err);
-      setError("Could not access camera. Please ensure permissions are granted.");
+      console.error("Camera access error:", err);
+      const errorMessage = err.name === 'NotAllowedError' 
+        ? "Camera permission denied. Please allow camera access in browser settings."
+        : err.name === 'NotFoundError'
+        ? "No camera device found. Please check your device."
+        : "Could not access camera. Please ensure permissions are granted.";
+      setError(errorMessage);
     }
   };
 

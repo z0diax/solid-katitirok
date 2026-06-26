@@ -42,6 +42,12 @@ export default function CameraModal({
               autoPlay
               playsInline
               muted
+              onLoadedMetadata={() => {
+                // Ensure video plays after metadata loads
+                if (videoRef.current) {
+                  videoRef.current.play().catch(err => console.warn("Video play error:", err));
+                }
+              }}
               className="absolute min-w-full min-h-full object-cover transform scale-x-[-1]"
             />
             <div className="absolute inset-0 z-10 pointer-events-none border-[40px] border-white/80 rounded-full mix-blend-hard-light" />

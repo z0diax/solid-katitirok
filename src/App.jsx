@@ -14,16 +14,10 @@ export default function App() {
   const [farmers, setFarmers] = useState([]);
   const [chicks, setChicks] = useState(INITIAL_CHICKS);
 
-  const videoRef = useRef(null);
   const fieldRef = useRef(null);
   const nextId = useRef(1);
 
-  const { isCameraOpen, stream, error, videoRef: cameraVideoRef, openCamera, closeCamera } = useCamera();
-
-  // Merge the refs
-  React.useEffect(() => {
-    videoRef.current = cameraVideoRef.current;
-  }, [cameraVideoRef]);
+  const { isCameraOpen, stream, error, videoRef, openCamera, closeCamera } = useCamera();
 
   const getRandomTargetCallback = useCallback(() => {
     return getRandomTarget(fieldRef);
